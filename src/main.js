@@ -103,7 +103,8 @@ function createWindow() {
         show: false,
         icon: __dirname + '/../images/icon.png',
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            enableRemoteModule: true,
         }
     });
     // Move window to top (left) of screen.
@@ -136,10 +137,17 @@ function createWindow() {
         console.log('window failed load');
     });
 }
+
+
+const {globalShortcut} = require('electron');
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', () => {
     console.log('app is ready');
+    globalShortcut.register('F5', function() {
+        mainWindow.reload();
+    });
     createWindow();
 });
 
@@ -164,3 +172,7 @@ app.on('activate', function () {
     // dock icon is clicked and there are no other windows open.
     if (mainWindow == null) createWindow();
 });
+
+
+
+
